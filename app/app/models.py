@@ -1,6 +1,6 @@
 from django.db import models
 
-class Users(models.Model):
+class User(models.Model):
     user_id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=255, unique=True)
     password_hash = models.CharField(max_length=255)
@@ -9,12 +9,11 @@ class Users(models.Model):
     profile_photo_link = models.URLField(null=True, blank=True)
     # ... other fields and methods
 
-class PaymentMethods(models.Model):
+class PaymentMethod(models.Model):
     payment_id = models.AutoField(primary_key=True)
-    #user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     card_number = models.CharField(max_length=255)
     card_expiry = models.CharField(max_length=10)
-    # ... other fields and methods
 
 class Planet(models.Model):
     planet_id = models.AutoField(primary_key=True)
@@ -41,10 +40,10 @@ class SeatingArrangement(models.Model):
     spaceship_id = models.ForeignKey(Spaceships, on_delete=models.CASCADE)
     seat_number = models.CharField(max_length=10)
     availability = models.BooleanField(default=True)
-    booking_id = models.ForeignKey('Bookings', on_delete=models.CASCADE)
+    booking_id = models.ForeignKey('Booking', on_delete=models.CASCADE)
     # ... other fields and methods
 
-class FlightSchedules(models.Model):
+class FlightSchedule(models.Model):
     schedule_id = models.AutoField(primary_key=True)
     flight_group_id = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     spaceship_id = models.ForeignKey(Spaceships, on_delete=models.CASCADE)
@@ -55,11 +54,11 @@ class FlightSchedules(models.Model):
     flight_photo_link = models.URLField(null=True, blank=True)
     # ... other fields and methods
 
-class Bookings(models.Model):
+class Booking(models.Model):
     booking_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
-    schedule_id = models.ForeignKey(FlightSchedules, on_delete=models.CASCADE)
-    payment_id = models.ForeignKey(PaymentMethods, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    schedule_id = models.ForeignKey(FlightSchedule, on_delete=models.CASCADE)
+    payment_id = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     num_passengers = models.PositiveIntegerField()
     starting_planet_id = models.ForeignKey(Planet, related_name='starting_planets', on_delete=models.CASCADE)
@@ -69,15 +68,15 @@ class Bookings(models.Model):
     is_completed = models.BooleanField(default=False)
     # ... other fields and methods
 
-class BookingStoppings(models.Model):
+class Bookingtoppings(models.Model):
     booking_stopping_id = models.AutoField(primary_key=True)
-    booking_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)
+    booking_id = models.ForeignKey(Booking, on_delete=models.CASCADE)
     stop_planet_id = models.ForeignKey(Planet, on_delete=models.CASCADE)
     stop_destination_id = models.ForeignKey(Destinations, on_delete=models.CASCADE)
     # ... other fields and methods
 
 class PassengerEmails(models.Model):
     email_id = models.AutoField(primary_key=True)
-    booking_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)
+    booking_id = models.ForeignKey(Booking, on_delete=models.CASCADE)
     passenger_email = models.EmailField()
     # ... other fields and methods

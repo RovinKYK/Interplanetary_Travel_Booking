@@ -22,15 +22,17 @@ from rest_framework.urlpatterns import format_suffix_patterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('payment_methods/', payment_method_list),
+    path('seat_arrangement/', seat_arrangement_list),
+    path('bookings/', bookings_list)
 ]
 
 '''
     users
     payment_methods/
     payment_methods/<int:payment_id>
-    seat_arrangement/
+    
     seat_arrangement/<int:arrangement_id>
-    bookings/
+    
     bookings/<int:bookings_id>
     flight_schedules/
 '''
