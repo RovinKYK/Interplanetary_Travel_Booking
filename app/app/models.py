@@ -11,7 +11,7 @@ class Users(models.Model):
 
 class PaymentMethods(models.Model):
     payment_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    #user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     card_number = models.CharField(max_length=255)
     card_expiry = models.CharField(max_length=10)
     # ... other fields and methods
