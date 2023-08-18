@@ -1,0 +1,12 @@
+Set-ExecutionPolicy Bypass
+. .venv/Scripts/activatep
+pip install django
+pip install djangorestframework
+cd app
+python manage.py runserver
+
+################################
+super user
+
+username = admin
+password = 12345
