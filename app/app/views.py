@@ -7,10 +7,12 @@ from django.http import HttpResponse
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import AuthenticationFailed
-import jwt
-import datetime
-from .serializers import UserSerializer
+import jwt, json
+from datetime import datetime
+from .serializers import UserSerializer, FlightSchedulesSerializer
 from django.contrib.auth.hashers import check_password
+from django.db.models import Q
+
 
 def index(request):
     return HttpResponse("Hello, world.")
@@ -114,3 +116,41 @@ def logout_view(request):
         'message': 'success'
     }
     return response
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def available_flights_view(request):
+    data = json.loads(request.body)
+    # Get query parameters from the request
+    departure_planet_id = data.get('departure_planet_id')
+    destination_id = data.get('destination_id')
+    selected_date = data.get('selected_date')
+    start_time = data.get('start_time')
+    end_time = data.get('end_time')
+    print(data)
+
+    # Combine date and time strings into datetime objects
+    # Convert the selected date and times to datetime objects
+    selected_date = datetime.strptime(selected_date, '%Y-%m-%d')
+    start_time = datetime.strptime(start_time, '%H:%M:%S').time()
+    end_time = datetime.strptime(end_time, '%H:%M:%S').time()
+
+    # Combine the selected date and start time to create the start datetime
+    start_datetime = datetime.combine(selected_date.date(), start_time)
+
+    # Combine the selected date and end time to create the end datetime
+    end_datetime = datetime.combine(selected_date.date(), end_time)
+
+    # Query for flight schedules that match the criteria
+    matching_flights = FlightSchedule.objects.filter(
+        departure_planet_id=departure_planet_id,
+        destination_id=destination_id,
+        departure_datetime__date=selected_date
+    ).exclude(
+        Q(departure_datetime__lt=start_datetime) | Q(arrival_datetime__gt=end_datetime)
+    )
+
+    # Serialize the flight schedules and return the response
+    serializer = FlightSchedulesSerializer(matching_flights, many=True)
+    return Response(serializer.data)

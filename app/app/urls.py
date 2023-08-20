@@ -31,6 +31,7 @@ urlpatterns = [
     path('bookings/', bookings_list),
     path('login/', login_view),
     path('register/', register_view),
+    path('flight_schedules/', available_flights_view),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

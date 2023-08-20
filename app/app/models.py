@@ -44,7 +44,7 @@ class SeatingArrangement(models.Model):
     booking_id = models.ForeignKey('Bookings', on_delete=models.CASCADE)
     # ... other fields and methods
 
-class FlightSchedules(models.Model):
+class FlightSchedule(models.Model):
     schedule_id = models.AutoField(primary_key=True)
     flight_group_id = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     spaceship_id = models.ForeignKey(Spaceships, on_delete=models.CASCADE)
@@ -53,12 +53,13 @@ class FlightSchedules(models.Model):
     departure_datetime = models.DateTimeField()
     arrival_datetime = models.DateTimeField()
     flight_photo_link = models.URLField(null=True, blank=True)
+    prices = models.DecimalField(max_digits=10, decimal_places=2)
     # ... other fields and methods
 
 class Bookings(models.Model):
     booking_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    schedule_id = models.ForeignKey(FlightSchedules, on_delete=models.CASCADE)
+    schedule_id = models.ForeignKey(FlightSchedule, on_delete=models.CASCADE)
     payment_id = models.ForeignKey(PaymentMethods, on_delete=models.CASCADE)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     num_passengers = models.PositiveIntegerField()

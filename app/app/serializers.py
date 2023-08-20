@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, PaymentMethods, SeatingArrangement, Bookings
+from .models import User, PaymentMethods, SeatingArrangement, Bookings, FlightSchedule
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -43,3 +43,13 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+    
+
+class FlightSchedulesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FlightSchedule
+        fields = [
+            'schedule_id', 'flight_group_id', 'spaceship_id', 'departure_planet_id',
+            'destination_id', 'departure_datetime', 'arrival_datetime', 'flight_photo_link',
+            'prices'
+        ]
