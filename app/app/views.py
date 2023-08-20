@@ -9,7 +9,6 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, json
-from datetime import datetime
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
 
@@ -183,15 +182,15 @@ def available_flights_view(request):
 
     # Combine date and time strings into datetime objects
     # Convert the selected date and times to datetime objects
-    selected_date = datetime.strptime(selected_date, '%Y-%m-%d')
-    start_time = datetime.strptime(start_time, '%H:%M:%S').time()
-    end_time = datetime.strptime(end_time, '%H:%M:%S').time()
+    selected_date = datetime.datetime.strptime(selected_date, '%Y-%m-%d')
+    start_time = datetime.datetime.strptime(start_time, '%H:%M:%S').time()
+    end_time = datetime.datetime.strptime(end_time, '%H:%M:%S').time()
 
     # Combine the selected date and start time to create the start datetime
-    start_datetime = datetime.combine(selected_date.date(), start_time)
+    start_datetime = datetime.datetime.combine(selected_date.date(), start_time)
 
     # Combine the selected date and end time to create the end datetime
-    end_datetime = datetime.combine(selected_date.date(), end_time)
+    end_datetime = datetime.datetime.combine(selected_date.date(), end_time)
 
     # Query for flight schedules that match the criteria
     matching_flights = FlightSchedule.objects.filter(
