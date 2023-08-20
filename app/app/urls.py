@@ -20,21 +20,18 @@ from .views import *
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
+    #Send Get with user_id to get completed bookings
+    path('completed_bookings/<int:id>', completed_bookings_list),
+
+    #Send Get with user_id to get pending bookings
+    #Send Put with to add new bookings
+    path('pending_bookings/<int:id>', pending_bookings_list),
+
     path('admin/', admin.site.urls),
+    path('payment_methods/<int:payment_id>', payment_method_details),
     path('payment_methods/', payment_method_list),
-    path('seat_arrangement/', seat_arrangement_list),
-    path('bookings/', bookings_list)
+    path('available_seats/<int:flight_id>', available_seat_list),
 ]
-
-'''
-    users
-    payment_methods/
-    payment_methods/<int:payment_id>
-    
-    seat_arrangement/<int:arrangement_id>
-    
-    bookings/<int:bookings_id>
-    flight_schedules/
-'''
-
+#path('flight_schedules/', booking_details),
+#path('seat_arrangement/<int:arrangement_id>', seat_arrangement_details)
 urlpatterns = format_suffix_patterns(urlpatterns)

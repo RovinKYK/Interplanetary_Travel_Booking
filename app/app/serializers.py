@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, PaymentMethod, SeatingArrangement, Booking
+from .models import User, PaymentMethod, Seat, Booking
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,15 +13,14 @@ class PaySerializer(serializers.ModelSerializer):
 
 class SeatSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SeatingArrangement
-        fields = ['arrangement_id', 'spaceship_id', 'seat_number', 'availability', 'booking_id']
+        model = Seat
+        fields = ['seat_id', 'spaceship_id', 'availability', 'booking_id']
 
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
         fields = [
-            'booking_id', 'user_id', 'schedule_id', 'payment_id',
-            'total_price', 'num_passengers', 'starting_planet_id',
-            'destination_planet_id', 'departure_date', 'spaceship_id',
-            'is_completed'
+            'booking_id', 'user_id', 'schedule_id',
+            'num_passengers', 'starting_planet', 'destination',
+            'departure_date', 'spaceship_name', 'spaceship_company'
         ]
