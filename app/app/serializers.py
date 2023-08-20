@@ -26,3 +26,12 @@ class BookingSerializer(serializers.ModelSerializer):
             'num_passengers', 'starting_planet', 'destination',
             'departure_date', 'spaceship_name', 'spaceship_company'
         ]
+
+class FlightSchedulesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FlightSchedule
+        fields = [
+            'schedule_id', 'flight_group_id', 'spaceship_id', 'departure_planet_id',
+            'destination_id', 'departure_datetime', 'arrival_datetime', 'flight_photo_link',
+            'prices'
+        ]

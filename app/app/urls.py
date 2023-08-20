@@ -37,8 +37,6 @@ urlpatterns = [
     path('available_seats/<int:flight_id>', available_seat_list),
     path('', index),
     path('payment_methods/', payment_method_list),
-    path('seat_arrangement/', seat_arrangement_list),
-    path('bookings/', bookings_list),
     path('login/', login_view),
     path('register/', register_view),
     path('flight_schedules/', available_flights_view),
