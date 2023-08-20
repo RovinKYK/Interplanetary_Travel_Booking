@@ -44,6 +44,7 @@ class FlightSchedule(models.Model):
     departure_datetime = models.DateTimeField()
     arrival_datetime = models.DateTimeField()
     #flight_photo_link = models.URLField(null=True, blank=True)
+    prices = models.DecimalField(max_digits=10, decimal_places=2)
     # ... other fields and methods
 
 class Booking(models.Model):

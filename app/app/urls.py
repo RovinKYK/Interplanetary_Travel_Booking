@@ -18,6 +18,10 @@ from django.contrib import admin
 from django.urls import path
 from .views import *
 from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     #Send Get with user_id to get completed bookings
@@ -31,7 +35,15 @@ urlpatterns = [
     path('payment_methods/<int:payment_id>', payment_method_details),
     path('payment_methods/', payment_method_list),
     path('available_seats/<int:flight_id>', available_seat_list),
+    path('', index),
+    path('payment_methods/', payment_method_list),
+    path('seat_arrangement/', seat_arrangement_list),
+    path('bookings/', bookings_list),
+    path('login/', login_view),
+    path('register/', register_view),
+    path('flight_schedules/', available_flights_view),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
-#path('flight_schedules/', booking_details),
-#path('seat_arrangement/<int:arrangement_id>', seat_arrangement_details)
+
 urlpatterns = format_suffix_patterns(urlpatterns)
