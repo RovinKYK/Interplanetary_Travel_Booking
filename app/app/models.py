@@ -1,6 +1,6 @@
 from django.db import models
 
-class Users(models.Model):
+class User(models.Model):
     user_id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=255, unique=True)
     password_hash = models.CharField(max_length=255)
@@ -11,7 +11,7 @@ class Users(models.Model):
 
 class PaymentMethods(models.Model):
     payment_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     card_number = models.CharField(max_length=255)
     card_expiry = models.CharField(max_length=10)
     # ... other fields and methods
@@ -57,7 +57,7 @@ class FlightSchedules(models.Model):
 
 class Bookings(models.Model):
     booking_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     schedule_id = models.ForeignKey(FlightSchedules, on_delete=models.CASCADE)
     payment_id = models.ForeignKey(PaymentMethods, on_delete=models.CASCADE)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)

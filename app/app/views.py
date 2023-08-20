@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 from .models import *
 from .serializers import *
 from rest_framework.decorators import api_view,authentication_classes, permission_classes
@@ -20,7 +18,7 @@ def index(request):
 @api_view(['GET','POST'])
 def payment_method_list(request, format=None):
     if request.method == 'GET':
-        paymentMethods = PaymentMethod.objects.all()
+        paymentMethods = PaymentMethods.objects.all()
         serializer = PaySerializer(paymentMethods, many=True)
         return Response(serializer.data)
     
@@ -40,7 +38,7 @@ def seat_arrangement_list(request, format=None):
 @api_view(['GET','POST'])
 def bookings_list(request, format=None):
     if request.method == 'GET':
-        bookings = Booking.objects.all()
+        bookings = Bookings.objects.all()
         serializer = BookingSerializer(bookings, many=True)
         return Response(serializer.data)
     
@@ -51,38 +49,8 @@ def bookings_list(request, format=None):
             return Response(status=status.HTTP_201_CREATED)
         
 
-# @api_view(['POST'])
-# # @authentication_classes([TokenAuthentication])  # Use TokenAuthentication
-# @permission_classes([AllowAny])  # Ensure the user is authenticated
-# # def user_login(request):
-# #     if request.method == 'POST':
-# #         serializer = UserLoginSerializer(data=request.data)
-# #         if serializer.is_valid():
-# #             username = serializer.validated_data['username']
-# #             password = serializer.validated_data['password_hash']
-            
-# #             # User is already authenticated through TokenAuthentication
-# #             return Response({'message': 'Login successful'}, status=status.HTTP_200_OK)
-# #         else:
-# #             # Invalid serializer data, return an error response
-# #             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# def user_login(request):
-#     if request.method == 'POST':
-#         serializer = UserLoginSerializer(data=request.data)
-#         if serializer.is_valid():
-#             # Validated data contains the user object if authentication is successful
-#             user = serializer.validated_data.get('user')
-#             if user:
-#                 return Response({'message': 'Login successful'}, status=status.HTTP_200_OK)
-#             else:
-#                 return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-#         else:
-#             # Invalid serializer data, return an error response
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 @api_view(['POST'])
+@permission_classes([AllowAny])  # Allow any user to register
 def register_view(request):
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
@@ -146,4 +114,3 @@ def logout_view(request):
         'message': 'success'
     }
     return response
->>>>>>> Stashed changes

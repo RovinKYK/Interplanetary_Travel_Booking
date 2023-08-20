@@ -26,18 +26,15 @@ SECRET_KEY = 'django-insecure-n4#n4fio5$!n+jxcp)nw@w+j$mkitgxkffyg+s(xbdbl9jihxd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.43.173"]
+ALLOWED_HOSTS = ["192.168.43.173", "127.0.0.1"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'app',
-<<<<<<< Updated upstream
-=======
     'rest_framework',
     'rest_framework.authtoken',
->>>>>>> Stashed changes
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
