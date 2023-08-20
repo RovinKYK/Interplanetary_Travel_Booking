@@ -82,7 +82,6 @@ def available_seat_list(request, flight_id, format=None):
     
 @api_view(['GET','PUT', 'DELETE'])
 def seat_arrangement_details(request, arrangement_id, format=None):
-
     try:
         seat = Seat.objects.get(pk=arrangement_id)
     except Seat.DoesNotExist:
@@ -101,9 +100,7 @@ def seat_arrangement_details(request, arrangement_id, format=None):
          
     elif request.method == 'DELETE':
         seat.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-        
+        return Response(status=status.HTTP_204_NO_CONTENT)  
 
 @api_view(['POST'])
 @permission_classes([AllowAny])  # Allow any user to register

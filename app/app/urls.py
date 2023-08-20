@@ -24,24 +24,18 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-    #Send Get with user_id to get completed bookings
-    path('completed_bookings/<int:id>', completed_bookings_list),
-
-    #Send Get with user_id to get pending bookings
-    #Send Put with to add new bookings
-    path('pending_bookings/<int:id>', pending_bookings_list),
-
     path('admin/', admin.site.urls),
+    path('', index),
+    path('login/', login_view),
+    path('register/', register_view),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('completed_bookings/<int:id>', completed_bookings_list),
+    path('pending_bookings/<int:id>', pending_bookings_list),
+    path('flight_schedules/', available_flights_view),
     path('payment_methods/<int:payment_id>', payment_method_details),
     path('payment_methods/', payment_method_list),
     path('available_seats/<int:flight_id>', available_seat_list),
-    path('', index),
-    path('payment_methods/', payment_method_list),
-    path('login/', login_view),
-    path('register/', register_view),
-    path('flight_schedules/', available_flights_view),
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
