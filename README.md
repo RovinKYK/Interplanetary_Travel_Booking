@@ -11,5 +11,8 @@ Welcome to the Interplanetary Travel Booking System! This system was developed f
 - **Django Backend**: Utilizes the Django framework for a robust and scalable backend.
 
 - **MySQL Database**: Employs MySQL as the database to store and manage travel information.
-
+  
+<p align="center">
+  <img src="./app/starfly.gif" />
+</p>
 
